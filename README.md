@@ -32,5 +32,17 @@ To run the UI app for demonstration:
 	* You should see a window like this pop up when first running the application:
 ![App_User_Interface](pictures/App_User_Interface.png)
 
+	* You can choose one from 5 algorithms listed in the combobox for making predictions:
+![App_User_Interface_Algorithms](pictures/App_User_Interface_Algorithms.png)
+
 	* After you have chosen a file or added some messages yourself and pushed the PREDICT button, a result like this will be shown:
 ![App_User_Interface2](pictures/App_User_Interface2.png)
+
+### Running experiments
+
+To run the experiments described in our report again and check for validity:
+1. Ensure you have completed the installation steps.
+2. Run the following commands: `python KNN.py`, `python SVM.py`, `python ANN.py`, `python logistic_regression.py`, `python naive_bayes.py` to see the evaluation on the test set of each of the 5 algorithms when using different vectorizers.
+3. Run the command `python vectorizers_comparison.py` to see the comparison between different vectorizers when using the majority vote model.
+4. Run the command `python baseline_system.py` to see the evaluation of the baseline model.
+
