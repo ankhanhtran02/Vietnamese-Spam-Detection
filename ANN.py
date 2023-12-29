@@ -54,6 +54,11 @@ def print_report(vectorizer_file, model_file):
     print('F1:', f1_score(y_test, y_predict,zero_division=0))
 
 if __name__ == '__main__':
+    print('Evaluation of the algorithm using Count Vectorizer')
     vectorizer_file = 'loaded_models\\count_vectorizer.pkl'
     model_file = 'loaded_models\\count_ANN.h5'
+    print_report(vectorizer_file=vectorizer_file, model_file= model_file)
+    print('Evaluation of the algorithm using TF-IDF Vectorizer')
+    vectorizer_file = 'loaded_models\\tfidf_vectorizer.pkl'
+    model_file = 'loaded_models\\tfidf_ANN.h5'
     print_report(vectorizer_file=vectorizer_file, model_file= model_file)
