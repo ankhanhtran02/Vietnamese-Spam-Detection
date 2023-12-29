@@ -41,7 +41,7 @@ def make_predictions(list_inputs: list, vectorizer_file, model_file):
 
     # Evaluating testing list
     scaler, svd, gridSearch = pickle.load(open(model_file, 'rb'))
-    return list(gridSearch.predict(np.array(svd.transform(scaler.transform(X_test_v)))).reshape(-1, 1))
+    return [item[0] for item in gridSearch.predict(np.array(svd.transform(scaler.transform(X_test_v)))).reshape(-1, 1)]
 
 def print_report(vectorizer_file, model_file):
     X_test_v, y_test = preprocess_test_file(vectorizer_file=vectorizer_file)
