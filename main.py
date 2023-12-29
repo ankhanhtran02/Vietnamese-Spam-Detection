@@ -277,6 +277,7 @@ class MainWindow(QMainWindow):
 		self.predicted = False
 
 	def predict(self):
+		self.RemoveOutputList()
 		self.predicted = True
 		
 		# This debug program will make random predictions for testing
