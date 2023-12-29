@@ -17,7 +17,7 @@ This package contains code for spam detection in the Vietnamese language. It inc
 To use this package, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/ankhanhtran02/Vietnamese-Spam-Detection.git`
-2. Navigate to the project directory: `cd vietnamese-spam-detection`
+2. Navigate to the project directory: `cd Vietnamese-Spam-Detection`
 3. Install dependencies: `pip install -r requirements.txt`
 
 ## Running Spam-Filtering <a name="usage"></a>
