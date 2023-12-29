@@ -14,7 +14,7 @@ def make_predictions(list_inputs, algorithm):
     X_test_v = preprocess_test_list(list_inputs, 'loaded_models\\tfidf_vectorizer.pkl')
     if algorithm == 'KNN':
         scaler, svd, gridSearch = pickle.load(open('loaded_models\\tfidf_KNN.pkl', 'rb'))
-        y_predict = list(gridSearch.predict(np.array(svd.transform(scaler.transform(X_test_v)))).reshape(-1, 1))
+        y_predict = [item[0] for item in gridSearch.predict(np.array(svd.transform(scaler.transform(X_test_v)))).reshape(-1, 1)]
     elif algorithm == 'Naive-Bayes':
         model = pickle.load(open('loaded_models\\tfidf_naive_bayes.pkl', 'rb'))
         y_predict = model.predict(X_test_v)
