@@ -9,6 +9,9 @@ import pickle
 import random
 
 def write_chunk(part, lines, header):
+    '''
+    This function writes data to a csv file that is later split into a training set and dataset
+    '''
     with open('datasets\\'+part+'.csv', 'w', encoding='utf-8') as f_out:
         f_out.write(header)
         f_out.writelines(lines)
@@ -86,6 +89,11 @@ def maximum_token_length(text:str):
     return len(max(text.split(), key=lambda item:len(item)))
 
 def count_links(text:str):
+    '''
+    This function returns the number of hyperlinks found in a text string, creating a new feature for the dataset
+    This feature may help detect spam cases like these:
+        + CongViecDeDang Lien(He)Zalo http://yutroi.one/r/k3C3RY4lzX . 
+    '''
     link_pattern = r'[a-zA-Z0-9]+\.[a-z]+\/([a-zA-Z0-9]+)?|[a-zA-Z0-9]+\.com|https?:\/\/[a-zA-Z0-9\.\/]+|www.[a-zA-Z0-9\.\/]+'
     pattern = re.compile(link_pattern)
     matches = pattern.finditer(text)
@@ -96,6 +104,11 @@ def count_links(text:str):
     return count
 
 def count_phone_numbers(text:str):
+    '''
+    This function returns the number of phone numbers recognized in a text string, creating a new feature for the dataset.
+    This feature may help detect spam cases like these:
+        + Em Bán Sim Vina Giống 6- 9 Số AC: 0815.496.000 - Giá Bán: 800,000
+    '''
     phone_pattern = r'\+?[0-9]{11,12}|0[0-9]{3}[\. -]?[0-9]{3}[\. -]?[0-9]{3}|0[0-9]{3}[\. -]?[0-9]{2}[\. -]?[0-9]{2}[\. -]?[0-9]{2}|0[0-9]{2}[\. -]?[0-9]{3}[\. -]?[0-9]{4}|(18|19)00[0-9]{4}'
     pattern = re.compile(phone_pattern)
     matches = pattern.finditer(text)
@@ -106,6 +119,11 @@ def count_phone_numbers(text:str):
     return count
 
 def count_weird_capitalization(text:str):
+    '''
+    This function returns the number of weird capitalization patterns recognized in a text string, creating a new feature for the dataset.
+    This feature may help detect spam cases like these:
+        + A Oi, BenEm NhanLam BangT0tNghiep Cap3.CaoDang.DaiHoc.Bang Lxe may.oto..Va TatCa CacL0ai GiayT0Khac.GiaoHang MoiThuTien. G0l/Zal0: 0387114212
+    '''
     cap_pattern = r'[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹý][a-zàáâãèéêìíòóôõùúăđĩũơưăạảấầẩẫậắằẳẵặẹẻẽềềểếễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹý]*[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹý]*'
     pattern = re.compile(cap_pattern)
     matches = pattern.finditer(text)
@@ -116,6 +134,11 @@ def count_weird_capitalization(text:str):
     return count
 
 def count_money(text:str):
+    '''
+    This function returns the number of money string patterns recognized in a text string, creating a new feature for the dataset.
+    This feature may help detect spam cases like these:
+        + A/Chi duoc Ho tro khoan vay tu 1Otr-1OOtr thu tuc Nhanh Gon,Tim Hieu Tai: 888my.cc
+    '''
     money_pattern = r'([0-9]+[\.,])*[0-9]+([Kkdđ]| ngàn| nghìn|.ooo|tr| triệu| vnd| ty| tỷ| đồng| tỉ| ti)'
     pattern = re.compile(money_pattern)
     matches = pattern.finditer(text)
@@ -126,6 +149,11 @@ def count_money(text:str):
     return count
 
 def capitalization_proportion(text: str):
+    '''
+    This function returns the capitalization proportion of a text string, creating a new feature for the dataset.
+    This feature may help detect spam cases like these:
+        + Bên Em Nhận Làm Các Loại GPLX Máy A1,Ôtô B2,C,..CMND,Căn Cước, Đăng Ký Xe Các Loại,Bằng Cấp 3 Đến Đại Học & Tất Cả Giấy Tờ Khác.LiênHệ: 0889 984 184 Giao Toàn Quốc
+    '''
     cap_pattern = r'[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸ][0-9a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹý]*'
     pattern = re.compile(cap_pattern)
     matches = pattern.finditer(text)
@@ -209,6 +237,9 @@ def preprocess_train(training_set='datasets\\training_set.csv', vectorizer_file=
 
 
 def preprocess_test_list(test_list:list, vectorizer_file):
+    '''
+    This function preprocess a list of strings using the vectorizer specified in the file named vectorizer_file and returns a numpy array for test set evaluation.
+    '''
     X_test1 = []
     additional_features = []
     for test_string in test_list:
@@ -223,6 +254,9 @@ def preprocess_test_list(test_list:list, vectorizer_file):
     return X_test_v
 
 def preprocess_test_file(test_file = 'datasets\\test_set.csv', vectorizer_file = 'loaded_models\\finalized_vectorizer.pkl'):
+    '''
+    This function reads the data contained in a csv file that is meant to be used for test set evaluation, and returns the arrays X_test and y_test after being vectorized by the vectorizer specified by the vectorizer_file parameter.
+    '''
     df = pd.read_csv(test_file)
     df = df[df.columns[:2]]
     X = df['text'].astype(str)
