@@ -1,10 +1,10 @@
 # Vietnamese-Spam-Detection <a name="vietnamese-spam-detection"></a>
 
 ## Table of Contents
-* [Spam-Filtering](#vietnamese-spam-detection)
+* [Vietnamese-Spam-Detection](#vietnamese-spam-detection)
 	* [About](#about)
-	* [Installing Spam-Filtering](#installation)
-	* [Running Spam-Filtering](#usage)
+	* [Installation](#installation)
+	* [Usage](#usage)
 
 
 ## About <a name="about"></a>
@@ -12,7 +12,7 @@
 This package contains code for spam detection in the Vietnamese language. It includes machine learning models trained on Vietnamese text data to classify messages as spam or non-spam. Additionally, it provides a user-friendly UI application built using the `PyQt6` library for demonstration and testing purposes.
 
 
-## Installing Spam-Filtering <a name="installation"></a>
+## Installation <a name="installation"></a>
 
 To use this package, follow these steps:
 
@@ -20,7 +20,7 @@ To use this package, follow these steps:
 2. Navigate to the project directory: `cd Vietnamese-Spam-Detection`
 3. Install dependencies: `pip install -r requirements.txt`
 
-## Running Spam-Filtering <a name="usage"></a>
+## Usage <a name="usage"></a>
 
 ### Running the UI App
 
