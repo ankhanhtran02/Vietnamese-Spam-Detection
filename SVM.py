@@ -36,6 +36,11 @@ def print_report(vectorizer_file, model_file):
     print('F1:', f1_score(y_test, y_predict))
 
 if __name__ == '__main__':
-    vectorizer_file = 'loaded_models\\count_vectorizer.pkl'
-    model_file = 'loaded_models\\count_SVM.pkl'
+    print('Evaluation of the algorithm using Count Vectorizer')
+    vectorizer_file = 'loaded_models/count_vectorizer.pkl'
+    model_file = 'loaded_models/count_SVM.pkl'
+    print_report(vectorizer_file=vectorizer_file, model_file= model_file)
+    print('Evaluation of the algorithm using TF-IDF Vectorizer')
+    vectorizer_file = 'loaded_models/tfidf_vectorizer.pkl'
+    model_file = 'loaded_models/tfidf_SVM.pkl'
     print_report(vectorizer_file=vectorizer_file, model_file= model_file)
