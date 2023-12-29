@@ -44,6 +44,11 @@ def make_predictions(list_inputs: list, vectorizer_file, model_file):
     return y_predict
 
 if __name__ == '__main__':
+    print('Evaluation of the algorithm using Count Vectorizer')
     vectorizer_file = 'loaded_models\\count_vectorizer.pkl'
     model_file = 'loaded_models\\count_logistic_regression.pkl'
+    print_report(vectorizer_file=vectorizer_file, model_file= model_file)
+    print('Evaluation of the algorithm using TF-IDF Vectorizer')
+    vectorizer_file = 'loaded_models\\tfidf_vectorizer.pkl'
+    model_file = 'loaded_models\\tfidf_logistic_regression.pkl'
     print_report(vectorizer_file=vectorizer_file, model_file= model_file)
