@@ -4,34 +4,26 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHB
 from PyQt6.QtGui import QPalette, QColor, QIcon, QPixmap, QPainter, QPolygonF
 from PyQt6.QtCore import QSize, Qt, QPointF
 import pandas as pd
-import numpy as np
 from pathlib import Path
-import tensorflow as tf
-from v_preprocess import preprocess_test_list
-import pickle
+import KNN, naive_bayes, logistic_regression, SVM, ANN
 
 def make_predictions(list_inputs, algorithm):
-    '''
-    This function takes a list of strings and returns the predictions of spam and non-spam in the form of a list of 0s and 1s, based on the algorithm chosen
-    '''
-    X_test_v = preprocess_test_list(list_inputs, 'loaded_models\\tfidf_vectorizer.pkl')
-    if algorithm == 'KNN':
-        scaler, svd, gridSearch = pickle.load(open('loaded_models\\tfidf_KNN.pkl', 'rb'))
-        y_predict = [item[0] for item in gridSearch.predict(np.array(svd.transform(scaler.transform(X_test_v)))).reshape(-1, 1)]
-    elif algorithm == 'Naive-Bayes':
-        model = pickle.load(open('loaded_models\\tfidf_naive_bayes.pkl', 'rb'))
-        y_predict = model.predict(X_test_v)
-    elif algorithm == 'Logistic Regression':
-        model = pickle.load(open('loaded_models\\tfidf_logistic_regression.pkl', 'rb'))
-        y_predict = model.predict(X_test_v)
-    elif algorithm == 'SVM':
-        model = pickle.load(open('loaded_models\\tfidf_SVM.pkl', 'rb'))
-        y_predict = model.predict(X_test_v)
-    elif algorithm == 'ANN':
-        model = tf.keras.models.load_model('loaded_models\\tfidf_ANN.h5')
-        prediction_prob = model.predict(X_test_v)
-        y_predict = [np.argmax(prediction_prob[i]) for i in range(prediction_prob.shape[0])]
-    return y_predict
+	vectorizer_file = 'loaded_models\\tfidf_vectorizer.pkl'
+	if algorithm == 'KNN':
+		model_file = 'loaded_models\\tfidf_KNN.pkl'
+		return KNN.make_predictions(list_inputs=list_inputs, vectorizer_file=vectorizer_file, model_file=model_file)
+	elif algorithm == 'Naive-Bayes':
+		model_file = 'loaded_models\\tfidf_naive_bayes.pkl'
+		return naive_bayes.make_predictions(list_inputs=list_inputs, vectorizer_file=vectorizer_file, model_file=model_file)
+	elif algorithm == 'Logistic Regression':
+		model_file = 'loaded_models\\tfidf_logistic_regression.pkl'
+		return logistic_regression.make_predictions(list_inputs=list_inputs, vectorizer_file=vectorizer_file, model_file=model_file)
+	elif algorithm == 'SVM':
+		model_file = 'loaded_models\\tfidf_SVM.pkl'
+		return SVM.make_predictions(list_inputs=list_inputs, vectorizer_file=vectorizer_file, model_file=model_file)
+	elif algorithm == 'ANN':
+		model_file = 'loaded_models\\tfidf_ANN.h5'
+		return ANN.make_predictions(list_inputs=list_inputs, vectorizer_file=vectorizer_file, model_file=model_file)
 
 
 def alert(message:str, parent=None):
@@ -99,9 +91,6 @@ class AboutDlg(QDialog):
 		manual.show()
 
 class MainWindow(QMainWindow):
-	'''
- 	The main window for the application
- 	'''
 	def __init__(self):
 		super(MainWindow, self).__init__()
 		self.setWindowTitle("Spam Filter")
@@ -210,9 +199,6 @@ class MainWindow(QMainWindow):
         # ------------------------------ Spam App end ------------------------------------
 
 	def InputFromFile(self):
-		'''
-  		This method reads input from a text file and add it to the input text box
-  		'''
 		dialog = QFileDialog(self)
 		dialog.setDirectory(str(Path('./')))
 		dialog.setFileMode(QFileDialog.FileMode.ExistingFiles)
@@ -233,9 +219,6 @@ class MainWindow(QMainWindow):
 		return
 	
 	def addTextInput(self, text:str):
-		'''
-  		This function creates a text box dialog for the user to input any text messages for classification
-    		'''
 		all_lines = re.sub(r'([\n]+)', "\n", text).split('\n')
 		for line in all_lines:
 			if line:
@@ -246,9 +229,6 @@ class MainWindow(QMainWindow):
 		print(self.list_inputs)
 
 	def OutputExport(self):
-		'''
-  		This function exports the data in the output box to csv format
-  		'''
 		df = pd.DataFrame()
 		try:
 			assert self.predicted and len(self.list_inputs) == len(self.list_outputs) and len(self.list_inputs) > 0
@@ -273,7 +253,7 @@ class MainWindow(QMainWindow):
 			# print(f"Selected file: {file_name}")
 			df.to_csv(file_name, index=False) # Save the file in csv format with two columns named "text" and "spam"
 
-	def RemoveInputList(self): # Clear the list of inputs
+	def RemoveInputList(self):
 		self.list_inputs = []
 		index = self.InputList_area_layout.count()-1
 		while (index>-1):
@@ -282,7 +262,7 @@ class MainWindow(QMainWindow):
 			index -= 1
 		self.RemoveOutputList()
 
-	def RemoveOutputList(self): # Clear the list of outputs
+	def RemoveOutputList(self):
 		self.list_outputs = []
 		index = self.OutputList_area_layout.count()-1
 		while (index>-1):
@@ -292,10 +272,6 @@ class MainWindow(QMainWindow):
 		self.predicted = False
 
 	def predict(self):
-		'''
-  		When the PREDICT button is pressed, this function makes the predictions by calling the make_predictions function and prints the output to the output text box
-  		'''
-		self.RemoveOutputList()
 		self.predicted = True
 		
 		# This debug program will make random predictions for testing
@@ -324,13 +300,10 @@ class MainWindow(QMainWindow):
 
 		print(self.list_outputs)
 	def on_algorithm_changed(self):
-		'''
-  		This function keeps track of the current algorithm chosen for making the predictions
-  		'''
 		self.algorithm = self.AlgoComboBox.currentText()
 		print(self.algorithm)
 
-# Start the application and create the main window
+
 app = QApplication(sys.argv)
 
 window = MainWindow()
