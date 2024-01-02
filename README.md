@@ -54,5 +54,6 @@ We want to thank the following contributors for their valuable contributions to 
 - [KingNoob2022](https://github.com/KingNoob2022): ANN implementation
 - [AndrewNguyen4](https://github.com/AndrewNguyen4): Naive Bayes implementation
 - [Vinh.TT](https://www.facebook.com/vinh.truongtuan): SVM implementation
+
 We also appreciate the help from our classmates, friends and families who contributed by adding more spam message samples to our dataset, which are crucial to the overall performance of our algorithms and validity of our experiments.
 
