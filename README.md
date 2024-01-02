@@ -5,6 +5,7 @@
 	* [About](#about)
 	* [Installation](#installation)
 	* [Usage](#usage)
+   	* [Contributors](#contributors)
 
 
 ## About <a name="about"></a>
@@ -45,4 +46,13 @@ To run the experiments described in our report again and check for validity:
 2. Run the following commands: `python KNN.py`, `python SVM.py`, `python ANN.py`, `python logistic_regression.py`, `python naive_bayes.py` to see the evaluation on the test set of each of the 5 algorithms when using different vectorizers.
 3. Run the command `python vectorizers_comparison.py` to see the comparison between different vectorizers when using the majority vote model.
 4. Run the command `python baseline_system.py` to see the evaluation of the baseline model.
+
+## Contributors <a name="contributors"></a>
+We want to thank the following contributors for their valuable contributions to this project:
+- [ankhanhtran02](https://github.com/ankhanhtran02): Preprocessing and logistic regression implementation, experimenting
+- [Decent-Cypher](https://github.com/Decent-Cypher): KNN implementation, UI designing
+- [KingNoob2022](https://github.com/KingNoob2022): ANN implementation
+- [AndrewNguyen4](https://github.com/AndrewNguyen4): Naive Bayes implementation
+- [Vinh.TT](https://www.facebook.com/vinh.truongtuan): SVM implementation
+We also appreciate the help from our classmates, friends and families who contributed by adding more spam message samples to our dataset, which are crucial to the overall performance of our algorithms and validity of our experiments.
 
